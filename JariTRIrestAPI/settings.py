@@ -42,7 +42,10 @@ INSTALLED_APPS = [
     'company.apps.CompanyConfig',
     'topics.apps.TopicsConfig',
     'lecturers.apps.LecturersConfig',
-    'corsheaders'
+    'internships.apps.InternshipsConfig',
+    'thesis.apps.ThesisConfig',
+    'corsheaders',
+    'rest_framework_tricks',
 ]
 
 MIDDLEWARE = [
