@@ -1,20 +1,24 @@
 from django.shortcuts import render
-
+from django.http import HttpResponse 
+from django.shortcuts import render, redirect 
+from .forms import StudentForm
+from rest_framework.parsers import MultiPartParser, FormParser
+from rest_framework.response import Response
 # Create your views here.
 from django.http.response import JsonResponse
-from rest_framework.parsers import JSONParser 
+from rest_framework.parsers import JSONParser
 from rest_framework import status
- 
 from centraldata.models import  Student
 from centraldata.serializers import  StudentSerializer
 from rest_framework.decorators import api_view
 
+parser_classes = (MultiPartParser, FormParser)
+
 @api_view(['GET','POST','DELETE'])
-def student_list(request):
+def student_list(request, *args, **kwargs):
     # GET list of students, POST a new student, DELETE all students
     if request.method == 'GET':
         students = Student.objects.all()
-        
         name = request.GET.get('name', None)
         if name is not None:
             students = students.filter(name__icontains=name)
@@ -23,8 +27,7 @@ def student_list(request):
         return JsonResponse(students_serializer.data, safe=False)
 
     elif request.method == 'POST':
-        student_data = JSONParser().parse(request)
-        student_serializer = StudentSerializer(data=student_data)
+        student_serializer = StudentSerializer(data=request.data)
         if student_serializer.is_valid():
             student_serializer.save()
             return JsonResponse(student_serializer.data, status=status.HTTP_201_CREATED)

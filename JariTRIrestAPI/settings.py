@@ -46,6 +46,10 @@ INSTALLED_APPS = [
     'thesis.apps.ThesisConfig',
     'corsheaders',
     'rest_framework_tricks',
+    'awesome_avatar',
+    'authentication',
+    'rest_framework.authtoken', # Add this line
+    'rest_auth',                # Add this line
 ]
 
 MIDDLEWARE = [
@@ -127,9 +131,38 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = "/static/"
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
 
-CORS_ORIGIN_ALLOW_ALL = False
+
+CORS_ORIGIN_ALLOW_ALL = True
 CORS_ORIGIN_WHITELIST = (
-    'http://localhost:8081',
+    'http://localhost:8001',
 )
+
+AWESOME_AVATAR = {
+    'width': 100,
+    'height': 100,
+
+    'select_area_width': 400,
+    'select_area_height': 300,
+
+    'save_quality': 90,
+    'save_format': 'png',
+    }
+
+AUTH_USER_MODEL = 'authentication.User'
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+    ),
+}
+
+REST_USE_JWT = True

@@ -17,13 +17,24 @@ from django.contrib import admin
 from django.urls import path
 from django.conf.urls import url, include 
 
+from django.conf import settings # new
+from django.urls import path, include # new
+from django.conf.urls.static import static # new
+
 
 urlpatterns = [
-   # path('admin/', admin.site.urls),
+    path('admin/', admin.site.urls),
     url(r'^', include('centraldata.urls')),
     url(r'^', include('company.urls')),
     url(r'^', include('topics.urls')),
     url(r'^', include('lecturers.urls')),
     url(r'^', include('internships.urls')),
     url(r'^', include('thesis.urls')),
+    # url(r'^', include('authentication.urls')),
+    # url(r'^admin/', admin.site.urls),
+    url(r'^api/', include('authentication.urls')),
 ]
+
+
+if settings.DEBUG: # new
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
