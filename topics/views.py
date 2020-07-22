@@ -10,6 +10,28 @@ from topics.models import Topic
 from topics.serializers import TopicSerializer
 from rest_framework.decorators import api_view
 
+from rest_framework import viewsets
+from rest_framework.permissions import AllowAny
+from authentication.models import User
+from authentication.serializers import UserSerializer
+
+
+from authentication.permission import IsLoggedInUserOrAdmin, IsAdminUser
+
+class UserViewSet(viewsets.ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+    def get_permissions(self):
+        permission_classes = []
+        if self.action == 'create':
+            permission_classes = [AllowAny]
+        elif self.action == 'retrieve' or self.action == 'update' or self.action == 'partial_update':
+            permission_classes = [IsLoggedInUserOrAdmin]
+        elif self.action == 'list' or self.action == 'destroy':
+            permission_classes = [IsAdminUser]
+        return [permission() for permission in permission_classes]
+
 @api_view(['GET','POST','DELETE'])
 def topic_list(request):
     # GET list of topics, POST a new topic, DELETE all topics
@@ -55,24 +77,3 @@ def topic_detail(request, pk):
     except Topic.DoesNotExist: 
         return JsonResponse({'message': 'The Topic does not exist'}, status=status.HTTP_404_NOT_FOUND) 
 
-from rest_framework import viewsets
-from rest_framework.permissions import AllowAny
-from authentication.models import User
-from authentication.serializers import UserSerializer
-
-
-from authentication.permission import IsLoggedInUserOrAdmin, IsAdminUser
-
-class UserViewSet(viewsets.ModelViewSet):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
-
-    def get_permissions(self):
-        permission_classes = []
-        if self.action == 'create':
-            permission_classes = [AllowAny]
-        elif self.action == 'retrieve' or self.action == 'update' or self.action == 'partial_update':
-            permission_classes = [IsLoggedInUserOrAdmin]
-        elif self.action == 'list' or self.action == 'destroy':
-            permission_classes = [IsAdminUser]
-        return [permission() for permission in permission_classes]
