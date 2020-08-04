@@ -1,5 +1,8 @@
 from django.shortcuts import render
 
+from rest_framework.decorators import api_view
+from django.http import HttpResponse
+
 # Create your views here.
 from django.http.response import JsonResponse
 from rest_framework.parsers import JSONParser 
