@@ -7,7 +7,6 @@ class Student(models.Model):
     nim = models.CharField(max_length=255, blank=False, default='')
     number_phone = models.IntegerField(blank=False, default='')
     email = models.EmailField(blank=False, default='')
-    file = models.ImageField(upload_to='images/', blank=False, default='')
     village = models.CharField(max_length=50, blank=False, default='')
     rt_village = models.CharField(max_length=50, blank=False, default='')
     rw_village = models.CharField(max_length=50, blank=False, default='')
