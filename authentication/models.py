@@ -26,4 +26,4 @@ class UserProfile(models.Model):
     province = models.CharField(max_length=50, blank=True)
     city = models.CharField(max_length=50, blank=True)
     zip = models.CharField(max_length=5, blank=True)
-    photo = models.ImageField(upload_to='uploads', blank=True)
+    photo = models.ImageField(upload_to='uploads', blank=True, default='')

@@ -30,11 +30,13 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         profile = instance.profile
 
         instance.email = validated_data.get('email', instance.email)
+        instance.first_name = validated_data.get('first_name', instance.first_name)
+        instance.last_name = validated_data.get('last_name', instance.last_name)
         instance.save()
 
         profile.nim = profile_data.get('nim', profile.nim)
         profile.dob = profile_data.get('dob', profile.dob)
-        profile.number_phone = profile_data.get('number_phone', profile_data.number_phone)
+        profile.number_phone = profile_data.get('number_phone', profile.number_phone)
         profile.address = profile_data.get('address', profile.address)
         profile.province = profile_data.get('province', profile.province)
         profile.city = profile_data.get('city', profile.city)

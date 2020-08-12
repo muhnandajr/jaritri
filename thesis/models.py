@@ -1,5 +1,6 @@
 from django.db import models
 from centraldata.models import Student
+from authentication.models import User
 from company.models import Company
 from topics.models import Topic
 from lecturers.models import Lecturer
@@ -8,16 +9,16 @@ from rest_framework_tricks.models.fields import NestedProxyField
 # Create your models here.
 
 class Thesis(models.Model):
-    name = models.ForeignKey(Student, on_delete=models.CASCADE)
+    name = models.ForeignKey(User, on_delete=models.CASCADE)
     thesis_topic = models.ForeignKey(Topic, on_delete=models.CASCADE)
     thesis_title = models.CharField(max_length=255, blank=False, default='')
-    graduate_year = models.IntegerField(blank=False, default='')
     lecturer_adviser = models.ForeignKey(Lecturer, on_delete=models.CASCADE)
-    thesis_proposal = models.FileField(blank=True)
-    thesis_report = models.FileField(blank=True)
-    thesis_handout = models.FileField(blank=True)
-    thesis_ppt = models.FileField(blank=True)
+    thesis_proposal = models.FileField(upload_to='uploads', blank=True)
+    thesis_report = models.FileField(upload_to='uploads',blank=True)
+    thesis_handout = models.FileField(upload_to='uploads',blank=True)
+    thesis_ppt = models.FileField(upload_to='uploads',blank=True)
     publication_link = models.CharField(max_length=255, blank=False, default='')
+    internship_status = models.BooleanField(default=False)
     company_name = models.ForeignKey(Company, on_delete=models.CASCADE, blank=True, default='')
     start_date = models.DateField(blank=True, default='')
     end_date = models.DateField(blank=True, default='')

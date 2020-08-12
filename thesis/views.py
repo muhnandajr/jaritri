@@ -22,15 +22,16 @@ def thesis_list(request):
         if name is not None:
             thesiss = thesiss.filter(name__icontains=name)
         
-        thesiss_serializer = ThesisSerializer(thesiss, many=True)
+        thesiss_serializer = ThesisSerializer(thesiss, many=True, context={'request': request})
         return JsonResponse(thesiss_serializer.data, safe=False)
 
     elif request.method == 'POST':
-            thesis_data = JSONParser().parse(request)
-            thesis_serializer = ThesisSerializer(data=thesis_data)
+            thesis_serializer = ThesisSerializer(data=request.data, context={'request': request})
             if thesis_serializer.is_valid():
                 thesis_serializer.save()
                 return JsonResponse(thesis_serializer.data, status=status.HTTP_201_CREATED)
+
+
     elif request.method == 'DELETE':
             count = Thesis.objects.all().delete()
             return JsonResponse({'message': '{} Thesis Data were deleted successfully!'.format(count[0])}, status=status.HTTP_204_NO_CONTENT) 
@@ -42,11 +43,11 @@ def thesis_detail(request, pk):
     try: 
         thesis = Thesis.objects.get(pk=pk) 
         if request.method == 'GET': 
-            thesis_serializer = ThesisSerializer(thesis) 
+            thesis_serializer = ThesisSerializer(thesis, context={'request': request}) 
             return JsonResponse(thesis_serializer.data)
         elif request.method == 'PUT': 
             thesis_data = JSONParser().parse(request) 
-            thesis_serializer = ThesisSerializer(thesis, data=thesis_data) 
+            thesis_serializer = ThesisSerializer(thesis, data=thesis_data, context={'request': request}) 
             if thesis_serializer.is_valid(): 
                 thesis_serializer.save() 
                 return JsonResponse(thesis_serializer.data) 
