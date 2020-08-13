@@ -19,12 +19,11 @@ def internship_list(request):
         if name is not None:
             internships = internships.filter(name__icontains=name)
         
-        internships_serializer = InternshipSerializer(internships, many=True)
+        internships_serializer = InternshipSerializer(internships, many=True, context={'request': request})
         return JsonResponse(internships_serializer.data, safe=False)
 
     elif request.method == 'POST':
-            internship_data = JSONParser().parse(request)
-            internship_serializer = InternshipSerializer(data=internship_data)
+            internship_serializer = InternshipSerializer(data=request.data, context={'request': request})
             if internship_serializer.is_valid():
                 internship_serializer.save()
                 return JsonResponse(internship_serializer.data, status=status.HTTP_201_CREATED)
