@@ -38,11 +38,10 @@ def internship_detail(request, pk):
     try: 
         internship = Internship.objects.get(pk=pk) 
         if request.method == 'GET': 
-            internship_serializer = InternshipSerializer(internship) 
+            internship_serializer = InternshipSerializer(internship, context={'request': request}) 
             return JsonResponse(internship_serializer.data)
         elif request.method == 'PUT': 
-            internship_data = JSONParser().parse(request) 
-            internship_serializer = InternshipSerializer(internship, data=internship_data) 
+            internship_serializer = InternshipSerializer(data=request.data, context={'request': request}) 
             if internship_serializer.is_valid(): 
                 internship_serializer.save() 
                 return JsonResponse(internship_serializer.data) 
