@@ -3,7 +3,8 @@ from django.db import models
 # Create your models here.
 
 class Student(models.Model):
-    name = models.CharField(max_length=255, blank=False, default='')
+    first_name = models.CharField(max_length=255, blank=False, default='')
+    last_name = models.CharField(max_length=255, blank=False, default='')
     nim = models.CharField(max_length=255, blank=False, default='')
     number_phone = models.IntegerField(blank=False, default='')
     email = models.EmailField(blank=False, default='')
