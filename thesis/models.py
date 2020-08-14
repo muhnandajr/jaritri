@@ -19,9 +19,9 @@ class Thesis(models.Model):
     thesis_ppt = models.FileField(upload_to='uploads',blank=True)
     publication_link = models.CharField(max_length=255, blank=False, default='')
     internship_status = models.BooleanField(default=False)
-    company_name = models.ForeignKey(Company, on_delete=models.CASCADE, blank=True, default='')
-    start_date = models.DateField(blank=True, default='')
-    end_date = models.DateField(blank=True, default='')
+    company_name = models.ForeignKey(Company, on_delete=models.CASCADE, blank=True, default='1')
+    start_date = models.DateField(blank=True, default='2000-01-01')
+    end_date = models.DateField(blank=True, default='2000-01-01')
     create_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateField(auto_now=True)
 
