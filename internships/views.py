@@ -41,7 +41,7 @@ def internship_detail(request, pk):
             internship_serializer = InternshipSerializer(internship, context={'request': request}) 
             return JsonResponse(internship_serializer.data)
         elif request.method == 'PUT': 
-            internship_serializer = InternshipSerializer(data=request.data, context={'request': request}) 
+            internship_serializer = InternshipSerializer(internship, data=request.data, context={'request': request}) 
             if internship_serializer.is_valid(): 
                 internship_serializer.save() 
                 return JsonResponse(internship_serializer.data) 

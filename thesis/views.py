@@ -46,7 +46,7 @@ def thesis_detail(request, pk):
             thesis_serializer = ThesisSerializer(thesis, context={'request': request}) 
             return JsonResponse(thesis_serializer.data)
         elif request.method == 'PUT': 
-            thesis_serializer = ThesisSerializer(data=request.data, context={'request': request}) 
+            thesis_serializer = ThesisSerializer(thesis, data=request.data, context={'request': request}) 
             if thesis_serializer.is_valid(): 
                 thesis_serializer.save() 
                 return JsonResponse(thesis_serializer.data) 
