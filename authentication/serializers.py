@@ -6,7 +6,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = UserProfile
-        fields = ('nim', 'dob','number_phone', 'village','rt_village','rw_village', 'province', 'city', 'postal_code', 'photo')
+        fields = ('nim', 'dob','number_phone', 'village','rt_village','rw_village','sub_district' 'province', 'city', 'postal_code', 'photo')
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     profile = UserProfileSerializer(required=True)
@@ -40,6 +40,7 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         profile.village = profile_data.get('village', profile.village)
         profile.rt_village = profile_data.get('rt_village', profile.rt_village)
         profile.rw_village = profile_data.get('rw_village', profile.rw_village)
+        profile.sub_district = profile_data.get('sub_district', profile.sub_district)
         profile.province = profile_data.get('province', profile.province)
         profile.city = profile_data.get('city', profile.city)
         profile.postal_code = profile_data.get('postal_code', profile.postal_code)
