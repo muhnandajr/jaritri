@@ -51,3 +51,22 @@ def internship_detail(request, pk):
         return JsonResponse({'message': 'Internship data was deleted successfully!'}, status=status.HTTP_204_NO_CONTENT)    
     except Internship.DoesNotExist: 
         return JsonResponse({'message': 'The Internship data does not exist'}, status=status.HTTP_404_NOT_FOUND)
+
+@api_view(['GET','POST','DELETE'])
+def internship_user(request, pk):
+    # GET list of lecturers, POST a new Lecturer, DELETE all lecturers
+    internship = Internship.objects.get(name=pk) 
+    if request.method == 'GET': 
+        internship_serializer = InternshipSerializer(internship, context={'request': request}) 
+        return JsonResponse(internship_serializer.data)
+
+    elif request.method == 'POST':
+            thesis_serializer = ThesisSerializer(data=request.data, context={'request': request})
+            if thesis_serializer.is_valid():
+                thesis_serializer.save()
+                return JsonResponse(thesis_serializer.data, status=status.HTTP_201_CREATED)
+
+    elif request.method == 'DELETE':
+            count = Thesis.objects.all().delete()
+            return JsonResponse({'message': '{} Thesis Data were deleted successfully!'.format(count[0])}, status=status.HTTP_204_NO_CONTENT) 
+    return JsonResponse(thesis_serializer.errors, status=status.HTTP_400_BAD_REQUEST)

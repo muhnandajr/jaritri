@@ -6,7 +6,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = UserProfile
-        fields = ('nim', 'dob','number_phone', 'village','rt_village','rw_village','sub_district' 'province', 'city', 'postal_code', 'photo')
+        fields = ('nim', 'dob','number_phone', 'village','rt_village','rw_village','sub_district', 'province', 'city', 'postal_code', 'photo')
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     profile = UserProfileSerializer(required=True)
