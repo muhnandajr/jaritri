@@ -10,7 +10,7 @@ from lecturers.models import Lecturer
 class Internship(models.Model):
     group = models.BooleanField(default=False)
     member = models.ForeignKey(Student, on_delete=models.CASCADE)
-    name = models.ForeignKey(User, on_delete=models.CASCADE)
+    name = models.ForeignKey(User, on_delete=models.CASCADE, unique=True)
     lecturer_adviser = models.ForeignKey(Lecturer, on_delete=models.CASCADE)
     company_name = models.ForeignKey(Company, on_delete=models.CASCADE)
     start_date = models.DateField(blank=False, default='')
