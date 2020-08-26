@@ -15,9 +15,9 @@ def internship_list(request):
     if request.method == 'GET':
         internships = Internship.objects.all()
         
-        name = request.GET.get('name', None)
-        if name is not None:
-            internships = internships.filter(name__icontains=name)
+        title = request.GET.get('title', None)
+        if title is not None:
+            internships = internships.filter(title__icontains=title)
         
         internships_serializer = InternshipSerializer(internships, many=True, context={'request': request})
         return JsonResponse(internships_serializer.data, safe=False)

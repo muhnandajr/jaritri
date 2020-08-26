@@ -18,9 +18,9 @@ def thesis_list(request):
     if request.method == 'GET':
         thesiss = Thesis.objects.all()
         
-        name = request.GET.get('name', None)
-        if name is not None:
-            thesiss = thesiss.filter(name__icontains=name)
+        thesis_title = request.GET.get('thesis_title', None)
+        if thesis_title is not None:
+            thesiss = thesiss.filter(thesis_title__icontains=thesis_title)
         
         thesiss_serializer = ThesisSerializer(thesiss, many=True, context={'request': request})
         return JsonResponse(thesiss_serializer.data, safe=False)
@@ -63,11 +63,6 @@ def thesis_user(request, pk):
     if request.method == 'GET': 
         thesis_serializer = ThesisSerializer(thesis, context={'request': request}) 
         return JsonResponse(thesis_serializer.data)
-    # if request.method == 'GET':
-    #     thesiss = Thesis.objects.filter(name=pk)
-        
-    #     thesiss_serializer = ThesisSerializer(thesiss, many=True, context={'request': request})
-    #     return JsonResponse(thesiss_serializer.data, safe=False)
 
     elif request.method == 'POST':
             thesis_serializer = ThesisSerializer(data=request.data, context={'request': request})
