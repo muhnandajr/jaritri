@@ -30,7 +30,6 @@ urlpatterns = [
     url(r'^', include('lecturers.urls')),
     url(r'^', include('internships.urls')),
     url(r'^', include('thesis.urls')),
-    # url(r'^', include('authentication.urls')),
     # url(r'^admin/', admin.site.urls),
     url(r'^api/', include('authentication.urls')),
 ]

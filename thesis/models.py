@@ -9,7 +9,7 @@ from rest_framework_tricks.models.fields import NestedProxyField
 # Create your models here.
 
 class Thesis(models.Model):
-    name = models.ForeignKey(User, on_delete=models.CASCADE, unique=True)
+    name = models.ForeignKey(User, on_delete=models.CASCADE)
     thesis_topic = models.ForeignKey(Topic, on_delete=models.CASCADE)
     thesis_title = models.CharField(max_length=255, blank=False, default='')
     lecturer_adviser = models.ForeignKey(Lecturer, on_delete=models.CASCADE)
